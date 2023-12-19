@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intune Functionality</title>
+  <style>
+    
+    body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrollbar due to default body margin */
+        }
+        .input-details {
+            height: 30vh; /* 50% of the viewport height */
+            width: 100%;
+            display: flex;
+            color: black; /* Text color on the color sections */
+            padding-top: 20px;
+            font-style:serif ;
+            font-weight: bold;
+
+        }
+        .heading-details {
+            height: 5vh; /* 5% of the viewport height */
+            width: 100%;
+            display: flex;
+            justify-content: center; /* Center the content horizontally */
+            align-items: center; /* Center the content vertically */
+            text-align: center;
+            color: black; /* Text color on the color sections */
+        }
+
+
+
+.input-container {
+    margin-right: 40px; /* Adjust the right margin for space between text boxes horizontally */
+    padding: 40px;
+    color: black; /* Text color on the color sections */
+    padding-top: 20px;
+    margin-top: 20px;
+
+}
+.getUserDevices{
+    margin-top: 50px;
+    padding-top: 20px;
+    height: 20px;
+}
+
+.container {
+    height: 70vh; /* 50% of the viewport height */
+    width: 100%;
+    display: flex;
+    color: black; /* Text color on the color sections */
+}
+
+#color1 {
+    background-color: #3498db; /* Change this to the first color */
+}
+
+#color2 {
+    background-color: white; /* Change this to the second color */
+}
+
+
+    h1 {
+      margin: 20px 0;
+      color: blue; /* Set the color for the h1 element */
+    }
+
+    
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .action-div {
+      width: 200px;
+      height: 160px;
+      margin: 20px;
+      padding: 10px;
+      border: 2px solid #333;
+      border-radius: 8px;
+      background-color: #add8e6; /* Light Blue */
+      display: inline-block;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .action-div:hover {
+      background-color: #87ceeb; /* Slightly darker blue on hover */
+    }
+
+    .action-div h2 {
+      margin: 5px 0;
+    }
+
+    .action-div p {
+      font-size: 14px;
+      color: #333;
+      margin: 0;
+    }
+
+    .action-div img {
+      max-width: 50px; /* Adjust the maximum width of the image */
+      max-height: 50px; /* Adjust the maximum height of the image */
+      margin-bottom: 10px;
+      display: flex;
+        justify-content: center; /* Center the content horizontally */
+        align-items: center; /* Center the content vertically */
+        text-align: center;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+        margin-top: 5px;
+        width: 100%; /* Full width */
+        padding: 10px; /* Increased padding */
+        margin-bottom: 10px;
+        border: 1px solid #ccc; /* Light border */
+        border-radius: 3px;
+        font-size: 14px; /* Font size */
+        outline: none;
+    }
+    .styled-button {
+    font-size: 15px;
+    width: 10%; /* Full width */
+    padding: 14px 2px;
+    height: 10px;
+    margin-top: 150px;
+    margin-right: 15px;
+    text-align: center;
+    display: flex; /* Use flexbox */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */}
+
+
+
+
+  </style>
+</head>
+<body>
+
+<div class="heading-details" id="color1">
+    <img src="khclogo.png" alt="Image Description" height="40px" width="300px">
+</div>
+
+  <!-- <input type="text" placeholder="Ticket No:" id="ticketNo"><br>
+  <input type="text" placeholder="User Email:" id="userEmail"><br>
+  <input type="text" placeholder="Machine Name:" id="machineName"><br> -->
+  <div class="input-details" id="color1">
+
+    <!-- Input details are arranged horizontally -->
+    <div class="input-container">
+        <label for="ticketNo">Ticket No:</label>
+        <input type="text" id="ticketNo" placeholder="Enter Ticket No" maxlength="10">
+    </div>
+    <div class="input-container">
+        <label for="userEmail">User Email:</label>
+        <input type="email" id="userEmail" placeholder="Enter User Email">
+    </div>
+    <div class="input-container">
+        <label for="machineName">Machine Name:</label>
+        <select id="machine" name="machine" required disabled>
+            <option value="" selected disabled>Select a Machine</option>
+        </select>
+    </div>
+    <div class="input-container" style="margin-top: 40px;">
+        <button id="getUserDevices" disabled>Get User Devices</button>
+    </div>
+
+    <button class="styled-button"  id="reset">Reset</button>
+    <button class="styled-button"  id="cancel">Cancel</button>
+    
+
+</div>
+
+
+<div class="container" id="color2">
+
+
+  <div id="syncAction" class="action-div" onclick="syncFunction()">
+    <img src="sync-image.jpg" >
+    <h2>Sync</h2>
+      <p>Synchronize data between devices.</p>
+  </div>
+
+  <div id="rebootAction" class="action-div" onclick="rebootFunction()">
+    <img src="reboot-image.jpg">  
+    <h2>Reboot</h2>
+      <p>Restart the device to apply changes.</p>
+  </div>
+
+  <div id="recoveryAction" class="action-div" onclick="recoveryFunction()">
+    <img src="recovery-image.jpg" >
+    <h2>Recovery</h2>
+      <p>Enter recovery mode for troubleshooting.</p>
+  </div>
+
+  <div id="pushAppAction" class="action-div" onclick="pushAppFunction()">
+    <img src="push-app-image.jpg" >
+    <h2>Push App</h2>
+      <p>Install and deploy a new application.</p>
+  </div>
+
+  <div id="removeAppAction" class="action-div" onclick="removeAppFunction()">
+    <img src="remove-app-image.jpg">
+    <h2>Remove App</h2>
+      <p>Uninstall an existing application.</p>
+  </div>
+
+  <div id="wipeAction" class="action-div" onclick="wipeFunction()">
+    <img src="wipe-image.jpg" >
+    <h2>Wipe</h2>
+      <p>Erase all data on the device.</p>
+  </div>
+
+  <div id="remoteLockAction" class="action-div" onclick="remoteLockFunction()">
+    <img src="remote-lock-image.jpg" >
+    <h2>Remote Lock</h2>
+      <img src="remote-lock-image.jpg" >
+      <p>Lock the device remotely for security.</p>
+  </div>
+
+ 
+</div>
+
+  <script>
+
+    const accessToken = localStorage.getItem('accessToken');
+    const authforApp=localStorage.getItem('authforApp')
+    const recovery_key_auth=localStorage.getItem('recovery_key_auth')
+    const machineSelect = document.getElementById('machine');
+    const devicesData = []; // Store devices data (including IDs and names)
+    
+    const ticketNoInput = document.getElementById('ticketNo');
+    const userEmailInput = document.getElementById('userEmail');
+    const getUserDevicesButton = document.getElementById('getUserDevices');
+    const syncButton = document.getElementById('syncAction');
+    const rebootButton = document.getElementById('rebootAction');
+    const recoveryKeyButton = document.getElementById('recoveryAction');
+    const pushAppButton = document.getElementById('pushAppAction');
+    const removeAppButton = document.getElementById('removeAppAction');
+    const remoteWipeButton = document.getElementById('wipeAction');
+    const remoteLockButton = document.getElementById('remoteLockAction');
+    const resetButton = document.getElementById('reset');
+    const cancelButton = document.getElementById('cancel');
+
+    function isEmailValid(email) {
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return emailRegex.test(email);
+    }
+
+    // Function to check if all required inputs are filled
+    function areInputsFilled() {
+        return ticketNoInput.value.trim() !== '' && isEmailValid(userEmailInput.value.trim());
+    }
+
+    // Function to enable/disable buttons based on input status
+    function updateButtonStatus() {
+        getUserDevicesButton.disabled = !areInputsFilled();
+    }
+
+    // Add event listeners to input fields to update button status
+    ticketNoInput.addEventListener('input', updateButtonStatus);
+    userEmailInput.addEventListener('input', updateButtonStatus);
+
+
+    // Event listener for the reset button
+    resetButton.addEventListener('click', () => {
+        // Clear input fields and disable buttons
+        ticketNoInput.value = '';
+        userEmailInput.value = '';
+        getUserDevicesButton.disabled = true;
+        machineSelect.innerHTML = '<option value="" selected disabled>Select a Machine</option>';
+        syncButton.disabled = true;
+        rebootButton.disabled = true;
+        recoveryKeyButton.disabled = true;
+        pushAppButton.disabled = true;
+        removeAppButton.disabled = true;
+        remoteLockButton.disabled = true;
+        remoteWipeButton.disabled = true;
+        
+    });
+
+    // Event listener for the cancel button
+    cancelButton.addEventListener('click', () => {
+        // Implement the cancel action here (e.g., close the form)
+        alert('Cancel button clicked. Implement cancel action here.');
+        window.location.href = 'index.html';
+    });
+
+
+    // Event listener for the "Get User Devices" button
+    getUserDevicesButton.addEventListener('click', () => {
+        const username = userEmailInput.value.trim();
+        // Make an API request to get user devices
+        fetch(`https://graph.microsoft.com/v1.0/users/${username}/managedDevices`, {
+            headers: {
+                'Authorization': `Bearer ${authforApp}`
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Check if the API request was successful and data contains the list of devices
+            if (data && data.value && data.value.length > 0) {
+                // Store the devices data (including names and IDs)
+                devicesData.length = 0; // Clear existing data
+                devicesData.push(...data.value.map(device => ({
+                    id: device.id, // Capture the device ID
+                    deviceName: device.deviceName,
+                    operatingSystem:device.operatingSystem,
+                    azureADDeviceId:device.azureADDeviceId // Capture the device name
+                })));
+
+                // Populate the select element with device names
+                machineSelect.innerHTML = ''; // Clear existing options
+                // Create and append options for each device name
+                devicesData.forEach(deviceData => {
+                    const option = document.createElement('option');
+                    option.value = deviceData.id; // Set the value as the device ID
+                    option.text = deviceData.deviceName;
+                    option.operatingSystem=deviceData.operatingSystem;
+                    option.azureADDeviceId=deviceData.azureADDeviceId // Display the device name
+                    machineSelect.appendChild(option);
+                });
+
+                // Enable the select element
+                machineSelect.disabled = false;
+            } else {
+                // Handle the case where no devices are found
+                alert('No devices found for the user.');
+            }
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the API request
+            console.error('Error fetching user devices:', error);
+            alert('Error fetching user devices. Please try again later.');
+        });
+    });
+
+    
+    machineSelect.addEventListener('change', () => {
+        // Enable the remaining buttons when a machine is selected
+        syncButton.disabled = false;
+        rebootButton.disabled = false;
+        remoteLockButton.disabled = false;
+        recoveryKeyButton.disabled=false;
+        removeAppButton.disabled = false;
+        remoteWipeButton.disabled = false;
+        pushAppButton.disabled = false;
+    });
+
+     // Event listener for the "Sync" button
+
+syncButton.addEventListener('click', () => {
+        // Get the selected device ID
+        const selectedDeviceId = machineSelect.options[machineSelect.selectedIndex].value;
+        const selectedDeviceName=machineSelect.options[machineSelect.selectedIndex].text;
+        const syncEndpoint = `https://graph.microsoft.com/v1.0/deviceManagement/managedDevices/${selectedDeviceId}/microsoft.graph.syncDevice`;
+
+        // Create headers with the access token
+        const headers = new Headers({
+            'Authorization': `Bearer ${authforApp}`
+        });
+
+        // Create the fetch request options
+        const requestOptions = {
+            method: 'POST',
+            headers: headers,
+            redirect: 'follow'
+        };
+
+        // Perform the sync operation
+        fetch(syncEndpoint, requestOptions)
+            .then(response => {
+                if (response.ok) {
+                    // Sync was successful, you can add your success handling code here
+                    alert(`Machine ${selectedDeviceName} will be synced shortly.`);
+                } else {
+                    // Handle errors here
+                    alert(`Failed to sync Machine ${selectedDeviceName}. Please try again after some time.`);
+                }
+            })
+            .catch(error => {
+                // Handle network errors or other exceptions here
+                console.error('Something went wrong during sync action`, please try again after sometime..', error);
+            });
+    });
+
+// Event listener for the "Reboot" button   
+rebootButton.addEventListener('click', () => {
+        // Get the selected device ID
+        const selectedDeviceId = machineSelect.options[machineSelect.selectedIndex].value;
+        const selectedDeviceName=machineSelect.options[machineSelect.selectedIndex].text;
+        const rebootEndpoint = `https://graph.microsoft.com/v1.0/deviceManagement/managedDevices/${selectedDeviceId}/microsoft.graph.rebootNow`;
+
+        // Create headers with the access token
+        const headers = new Headers({
+            'Authorization': `Bearer ${authforApp}`
+        });
+
+        // Create the fetch request options
+        const requestOptions = {
+            method: 'POST',
+            headers: headers,
+            redirect: 'follow'
+        };
+
+        // Perform the reboot operation
+        fetch(rebootEndpoint, requestOptions)
+            .then(response => {
+                if (response.ok) {
+                    // Reboot was successful, you can add your success handling code here
+                    alert(`Machine ${selectedDeviceName} will be rebooted shortly during the next sync cycle...`);
+                } else {
+                    // Handle errors here
+                    alert(`Failed to Reboot Machine ${selectedDeviceName}. Please try again after some time.`);
+                }
+            })
+            .catch(error => {
+                // Handle network errors or other exceptions here
+                console.error('Something went wrong during reboot action`, please try again after sometime..', error);
+            });
+    });
+// Event listener for the "Remote Lock" button
+    remoteLockButton.addEventListener('click', () => {
+        // Get the selected device ID
+        const selectedDeviceId = machineSelect.options[machineSelect.selectedIndex].value;
+        const selectedDeviceName = machineSelect.options[machineSelect.selectedIndex].text;
+        const operatingSystem = machineSelect.options[machineSelect.selectedIndex].operatingSystem
+
+        // Check if the operating system is not Windows or macOS
+        if (operatingSystem && !['Windows', 'MacOS'].includes(operatingSystem)) {
+            // The operating system is not Windows or macOS, proceed with remote lock
+
+            const remoteLockEndpoint = `https://graph.microsoft.com/v1.0/deviceManagement/managedDevices/${selectedDeviceId}/microsoft.graph.remoteLock`;
+
+            // Create headers with the access token
+            const headers = new Headers({
+                'Authorization': `Bearer ${authforApp}`
+            });
+
+            // Create the fetch request options
+            const requestOptions = {
+                method: 'POST',
+                headers: headers,
+                redirect: 'follow'
+            };
+
+            // Perform the remote lock operation
+            fetch(remoteLockEndpoint, requestOptions)
+                .then(response => {
+                    if (response.ok) {
+                        // Remote lock was successful, you can add your success handling code here
+                        alert(`Machine ${selectedDeviceName} is locked.`);
+                    } else {
+                        // Handle errors here
+                        alert(`Failed to lock Machine ${selectedDeviceName}. Please try again after some time.`);
+                    }
+                })
+                .catch(error => {
+                    // Handle network errors or other exceptions here
+                    console.error('Something went wrong during remote lock action`, please try again after sometime..', error);
+                });
+        } else {
+            // The operating system is Windows or macOS, do not perform remote lock
+            alert(`Remote Lock is not supported for Windows or macOS.`);
+        }
+    });
+    
+
+
+    
+    // Event listener for the "Wipe" button
+    remoteWipeButton.addEventListener('click', () => {
+        // Display the wipe modal when the button is clicked
+        document.getElementById('wipeModal').style.display = 'block';
+    });
+
+    // Event listener for the "Partial Wipe" button in the wipe modal
+      document.getElementById('partialWipe').addEventListener('click', () => {
+        // Implement the partial wipe functionality here
+        const wipeBody = {
+            wipe: {
+                keepEnrollmentData: 'true',
+                keepUserData: 'true'
+            }
+        };
+
+        // Get the selected device ID
+        const selectedDevice = machineSelect.options[machineSelect.selectedIndex].value;
+
+        if (selectedDevice) {
+            const partialWipeEndpoint = `https://graph.microsoft.com/v1.0/deviceManagement/managedDevices/${selectedDevice.id}/microsoft.graph.wipe`;
+
+            // Create headers with the access token
+            const headers = new Headers({
+                'Authorization': `Bearer ${authforApp}`,
+                'Content-Type': 'application/json'
+            });
+
+            // Create the fetch request options
+            const requestOptions = {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(wipeBody),
+                redirect: 'follow'
+            };
+
+            // Perform the partial wipe operation
+            fetch(partialWipeEndpoint, requestOptions)
+                .then(response => {
+                    if (response.ok) {
+                        alert('Partial wipe operation initiated successfully.');
+                    } else {
+                        alert('Failed to initiate partial wipe operation.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error initiating partial wipe operation:', error);
+                    alert('Error initiating partial wipe operation. Please try again later.');
+                });
+        }
+        // Close the wipe modal
+        document.getElementById('wipeModal').style.display = 'none';
+    });
+
+    // Event listener for the "Full Wipe" button in the wipe modal
+    document.getElementById('fullWipe').addEventListener('click', () => {
+        // Implement the full wipe functionality here
+        const wipeBody = {
+            wipe: {
+                keepEnrollmentData: 'false',
+                keepUserData: 'false'
+            }
+        };
+
+        // Get the selected device ID
+        const selectedDevice = machineSelect.options[machineSelect.selectedIndex].value;
+
+        if (selectedDevice) {
+            const fullWipeEndpoint = `https://graph.microsoft.com/v1.0/deviceManagement/managedDevices/${selectedDevice.id}/microsoft.graph.wipe`;
+
+            // Create headers with the access token
+            const headers = new Headers({
+                'Authorization': `Bearer ${authforApp}`,
+                'Content-Type': 'application/json'
+            });
+
+            // Create the fetch request options
+            const requestOptions = {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(wipeBody),
+                redirect: 'follow'
+            };
+
+            // Perform the full wipe operation
+            fetch(fullWipeEndpoint, requestOptions)
+                .then(response => {
+                    if (response.ok) {
+                        alert('Full wipe operation initiated successfully.');
+                    } else {
+                        alert('Failed to initiate full wipe operation.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error initiating full wipe operation:', error);
+                    alert('Error initiating full wipe operation. Please try again later.');
+                });
+        }
+
+
+        // Close the wipe modal
+        document.getElementById('wipeModal').style.display = 'none';
+    });
+    
+    recoveryKeyButton.addEventListener('click', async () => {
+    // Get the selected device ID
+    const selectedDeviceId = machineSelect.options[machineSelect.selectedIndex].azureADDeviceId;
+    const selectedDeviceName = machineSelect.options[machineSelect.selectedIndex].text;
+
+    try {
+        // Obtain the BitLocker recovery key auth token
+        
+
+       
+            // Extract the access token from the auth token response
+            
+
+            // Define the Microsoft Graph API URL for BitLocker recovery keys
+            const recoveryKeyEndpoint = `https://graph.microsoft.com/v1.0/informationProtection/bitlocker/recoveryKeys?$filter=deviceId eq '${selectedDeviceId}'&$orderby=createdDateTime desc`;
+
+            // Create headers with the access token
+            const headers = new Headers({
+                'Authorization': `Bearer ${recovery_key_auth}`
+            });
+
+            // Create the fetch request options
+            const requestOptions = {
+                method: 'GET',
+                headers: headers,
+                redirect: 'follow'
+            };
+
+            // Perform the BitLocker recovery key retrieval operation
+            const response = await fetch(recoveryKeyEndpoint, requestOptions);
+            const data = await response.json();
+
+            if (data.value.length > 0) {
+                const recoveryKeyId = data.value[0].id;
+                const recoveryKeyDetailsEndpoint = `https://graph.microsoft.com/v1.0/informationProtection/bitlocker/recoveryKeys/${recoveryKeyId}?$select=key`;
+
+                // Fetch the BitLocker recovery key details
+                const keyResponse = await fetch(recoveryKeyDetailsEndpoint, requestOptions);
+                const recoveryKeyData = await keyResponse.json();
+
+                const recoveryKey = recoveryKeyData.key;
+                // Display the BitLocker recovery key
+                alert(`Recovery Key for ${selectedDeviceName} is: ${recoveryKey}`);
+            } else {
+                alert(`Machine ${selectedDeviceName} does not have any Recovery key attached to it...`);
+            }
+        
+        }
+     catch (error) {
+        console.error('Error obtaining BitLocker recovery key:', error);
+        alert('Error obtaining BitLocker recovery key. Please try again later.');
+    }
+});
+
+        // Function to create a custom dialog for selecting a group
+function createGroupSelectionDialog(options, callback) {
+    const selectGroupModal = document.getElementById('groupSelectionModal');
+    const selectGroup = document.getElementById('selectGroup');
+    const confirmGroupButton = document.getElementById('confirmGroupButton');
+
+    // Populate the select element with group options
+    selectGroup.innerHTML = options.map(option => `<option value="${option.id}">${option.displayName}</option>`).join('');
+    confirmGroupButton.addEventListener('click', () => {
+        const selectedGroupId = selectGroup.value;
+        callback(selectedGroupId);
+        // Close the modal
+        selectGroupModal.style.display = 'none';
+        
+    });
+
+    selectGroupModal.style.display = 'block';
+}
+
+// Function to check if the user/device exists in the group
+// Function to check if a user exists in the group
+async function checkIfUserExistsInGroup(userEmail, selectedGroupId, accessToken) {
+    const response = await fetch(`https://graph.microsoft.com/v1.0/groups/${selectedGroupId}/members`, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch group members. Status: ${response.status}`);
+    }
+
+    const membersData = await response.json();
+
+    return membersData.value.some(member => member.userPrincipalName === userEmail);
+}
+
+// Function to check if a device exists in the group
+async function checkIfDeviceExistsInGroup(selectedDeviceId, selectedGroupId, accessToken) {
+    const response = await fetch(`https://graph.microsoft.com/v1.0/groups/${selectedGroupId}/members/microsoft.graph.device`, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch device members. Status: ${response.status}`);
+    }
+
+    const deviceMembersData = await response.json();
+
+    return deviceMembersData.value.some(device => device.deviceId === selectedDeviceId);
+}
+
+// Function to check if a user/device exists in the group
+async function checkIfMemberExists(memberType, selectedDeviceId, userEmail, selectedGroupId, accessToken) {
+    if (memberType === 'user') {
+        return checkIfUserExistsInGroup(userEmail, selectedGroupId, accessToken);
+    } else if (memberType === 'device') {
+        return checkIfDeviceExistsInGroup(selectedDeviceId, selectedGroupId, accessToken);
+    }
+
+    return false;
+}
+
+// Function to create a custom dialog for selecting a group
+
+
+// Function to create a custom dialog for selecting a user or device
+function createDeviceUserSelectionDialog(selectedDeviceId, selectedDeviceName, userEmail, selectedGroupId, accessToken) {
+    const deviceSelectionModal = document.getElementById('deviceSelectionModal');
+    const userOption = document.getElementById('userOption');
+    const deviceOption = document.getElementById('deviceOption');
+    const confirmMemberButton = document.getElementById('confirmMemberButton');
+    const memberInfo = document.getElementById('memberInfo');
+    const selectedMemberInfo = document.getElementById('selectedMemberInfo');
+
+    userOption.addEventListener('change', () => {
+        // Display the member information in the modal when the User option is selected
+        memberInfo.style.display = 'block';
+        selectedMemberInfo.textContent = `Selected User: ${userEmail}`;
+    });
+
+    deviceOption.addEventListener('change', () => {
+        // Display the member information in the modal when the Device option is selected
+        memberInfo.style.display = 'block';
+        selectedMemberInfo.textContent = `Selected Device: ${selectedDeviceName} (${selectedDeviceId})`;
+    });
+    // Add a click event listener to the confirm button
+    confirmMemberButton.addEventListener('click', async () => {
+        const selectedOption = userOption.checked ? 'user' : deviceOption.checked ? 'device' : '';
+
+        if (!selectedOption) {
+            alert('Please select whether to add a User or Device.');
+            return;
+        }
+
+        // Handle the selected option (User or Device)
+        const isMember = await checkIfMemberExists(selectedOption, selectedDeviceId, userEmail, selectedGroupId, accessToken);
+
+        if (isMember) {
+            alert(`${selectedOption === 'user' ? 'User' : 'Device'} is already a member of the selected group.`);
+        } else {
+            // Construct the JSON body for adding the user/device to the group
+            let body;
+            if (selectedOption === 'user') {
+                body = {
+                    '@odata.id': `https://graph.microsoft.com/v1.0/users/${userEmail}`
+                };
+            } else if (selectedOption === 'device') {
+                const response = await fetch(`https://graph.microsoft.com/v1.0/devices`, {
+              headers: {
+              'Authorization': `Bearer ${accessToken}`
+              }
+              });
+
+             if (!response.ok) {
+              throw new Error(`Failed to fetch devices. Status: ${response.status}`);
+               }
+
+              const devicesData = await response.json();
+
+              const matchingDevice = devicesData.value.find(device => device.deviceId === selectedDeviceId);
+              const deviceId=matchingDevice.id
+                body = {
+                    '@odata.id': `https://graph.microsoft.com/v1.0/devices/${deviceId}`
+                };
+            }
+
+            // Make an API request to add the user/device to the group
+            const isAdded = await addMemberToGroup(selectedGroupId, body, accessToken);
+
+            if (isAdded) {
+                alert(`${selectedOption === 'user' ? 'User' : 'Device'} has been successfully added to the group.`);
+            } else {
+                alert(`Failed to add ${selectedOption === 'user' ? 'User' : 'Device'} to the group.`);
+            }
+        }
+
+        // Close the modal
+        deviceSelectionModal.style.display = 'none';
+       
+    });
+
+    deviceSelectionModal.style.display = 'block';
+}
+
+
+function createDeviceUserSelectionDialogforremove(selectedDeviceId, selectedDeviceName, userEmail, selectedGroupId, accessToken) {
+
+    const deviceRemovalModal = document.getElementById('deviceRemovalModal');
+    const userOption1 = document.getElementById('userOption1');
+    const deviceOption1 = document.getElementById('deviceOption1');
+    const removeDeviceUserButton = document.getElementById('removeDeviceUserButton');
+    const memberInfo1 = document.getElementById('memberInfo1');
+    const selectedMemberInfo1 = document.getElementById('selectedMemberInfo1');
+
+    userOption1.addEventListener('change', () => {
+        // Display the member information in the modal when the User option is selected
+        memberInfo1.style.display = 'block';
+        selectedMemberInfo1.textContent = `Selected User: ${userEmail}`;
+    });
+
+    deviceOption1.addEventListener('change', () => {
+        // Display the member information in the modal when the Device option is selected
+        memberInfo1.style.display = 'block';
+        selectedMemberInfo1.textContent = `Selected Device: ${selectedDeviceName} (${selectedDeviceId})`;
+    });
+    // Add a click event listener to the confirm button
+    removeDeviceUserButton.addEventListener('click', async () => {
+        const selectedOption1 = userOption1.checked ? 'user' : deviceOption1.checked ? 'device' : '';
+
+        if (!selectedOption1) {
+            alert('Please select whether to remove a User or Device.');
+            return;
+        }
+        const isMember = await checkIfMemberExists(selectedOption1, selectedDeviceId, userEmail, selectedGroupId, accessToken);
+
+        if (!isMember) {
+            alert(`${selectedOption1 === 'user' ? 'User' : 'Device'} is not a member of the selected group.`);
+            // Exit the function early
+        }
+        else{
+        // Declare memberId
+        let memberId;
+
+        if (selectedOption1 === 'user') {
+
+            // Make an API request to fetch the user's ID based on the email
+            const response = await fetch(`https://graph.microsoft.com/v1.0/users?$filter=mail eq '${userEmail}'`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch user. Status: ${response.status}`);
+            }
+
+            const userData = await response.json();
+
+            if (userData.value.length === 1) {
+                memberId = userData.value[0].id;
+            } else {
+                alert(`User with email ${userEmail} not found.`);
+                // Exit the function early
+            }
+       } 
+       else  {
+            const response = await fetch(`https://graph.microsoft.com/v1.0/devices`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch devices. Status: ${response.status}`);
+            }
+
+            const devicesData = await response.json();
+
+            const matchingDevice = devicesData.value.find(device => device.deviceId === selectedDeviceId);
+
+            if (matchingDevice) {
+                memberId = matchingDevice.id;
+            } else {
+                alert(`Device with ID ${selectedDeviceId} not found.`);
+                
+            }
+        } 
+
+        // Check if the selected user/device is a member of the selected group
+        
+
+        // Make an API request to remove the user/device from the group
+        const isRemoved = await removeMemberFromGroup(selectedGroupId, memberId, accessToken);
+
+        if (isRemoved) {
+            alert(`${selectedOption1 === 'user' ? 'User' : 'Device'} has been removed from the selected group successfully.`);
+           
+        } else {
+            alert(`Failed to remove ${selectedOption1=== 'user' ? 'User' : 'Device'} from the selected group.`);
+            
+        }
+    }
+        // Remove the dialog element from the document
+        deviceRemovalModal.style.display = 'none';
+       
+    });
+
+    deviceRemovalModal.style.display = 'block';
+}
+
+
+// Function to add a user/device to the group
+async function addMemberToGroup(selectedGroupId, body, accessToken) {
+    const response = await fetch(`https://graph.microsoft.com/v1.0/groups/${selectedGroupId}/members/$ref`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    });
+    
+    return response.ok;
+}
+
+
+// Event listener for the "Push App" button
+pushAppButton.addEventListener('click', async () => {
+    // Get the selected device ID, device name, and user email
+    
+    const selectedDeviceId = machineSelect.options[machineSelect.selectedIndex].azureADDeviceId;
+    const selectedDeviceName = machineSelect.options[machineSelect.selectedIndex].text;
+    const userEmail = userEmailInput.value.trim();
+
+    try {
+        // Make an API request to get all groups
+        const groupsResponse = await fetch('https://graph.microsoft.com/v1.0/groups', {
+            headers: {
+                'Authorization': `Bearer ${authforApp}`
+            }
+        });
+
+        if (!groupsResponse.ok) {
+            throw new Error(`Failed to fetch groups. Status: ${groupsResponse.status}`);
+        }
+
+        const groupsData = await groupsResponse.json();
+
+        if (!groupsData.value || groupsData.value.length === 0) {
+            throw new Error('No groups found.');
+        }
+
+        // Create a custom dialog to select a group
+        createGroupSelectionDialog(groupsData.value, async (selectedGroupId) => {
+            
+            deviceRemovalModal.style.display = 'none';
+            // Create a custom dialog for selecting device/user after selecting a group
+            createDeviceUserSelectionDialog(selectedDeviceId, selectedDeviceName, userEmail, selectedGroupId, authforApp);
+        });
+    } catch (error) {
+        console.error('Error:', error);
+    
+        alert(`An error occurred: ${error.message}`);
+    }
+});
+
+// Function to remove a user/device from the group
+async function removeMemberFromGroup(selectedGroupId, memberId, accessToken) {
+    const response = await fetch(`https://graph.microsoft.com/v1.0/groups/${selectedGroupId}/members/${memberId}/$ref`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+
+    return response.ok;
+}
+
+// Event listener for the "Remove App" button
+removeAppButton.addEventListener('click', async () => {
+ 
+     
+    // Get the selected device ID, device name, and user email
+    const selectedDeviceId = machineSelect.options[machineSelect.selectedIndex].azureADDeviceId;
+    const selectedDeviceName = machineSelect.options[machineSelect.selectedIndex].text;
+    const userEmail = userEmailInput.value.trim();
+    
+
+    try {
+        // Make an API request to get all groups
+        const groupsResponse = await fetch('https://graph.microsoft.com/v1.0/groups', {
+            headers: {
+                'Authorization': `Bearer ${authforApp}`
+            }
+        });
+
+        if (!groupsResponse.ok) {
+            throw new Error(`Failed to fetch groups. Status: ${groupsResponse.status}`);
+        }
+
+        const groupsData = await groupsResponse.json();
+
+        if (!groupsData.value || groupsData.value.length === 0) {
+            throw new Error('No groups found.');
+        }
+
+        // Create a custom dialog to select a group
+        createGroupSelectionDialog(groupsData.value, async (selectedGroupId) => {
+
+            deviceSelectionModal.style.display='none'
+           
+            
+            createDeviceUserSelectionDialogforremove(selectedDeviceId, selectedDeviceName, userEmail, selectedGroupId, authforApp);
+                
+            
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        alert(`An error occurred: ${error.message}`);
+    }
+});
+
+// Event Listener to close the Modals
+
+document.getElementById("closeWipeModal").addEventListener("click", () => {
+    document.getElementById("wipeModal").style.display = "none";
+  });
+
+  // Function to close the groupSelectionModal
+  document.getElementById("closeGroupModal").addEventListener("click", () => {
+    document.getElementById("groupSelectionModal").style.display = "none";
+  });
+
+  // Function to close the deviceSelectionModal
+  document.getElementById("closeDeviceSelectionModal").addEventListener("click", () => {
+    document.getElementById("deviceSelectionModal").style.display = "none";
+  });
+
+  // Function to close the deviceRemovalModal
+  document.getElementById("closeDeviceRemovalModal").addEventListener("click", () => {
+    document.getElementById("deviceRemovalModal").style.display = "none";
+  });
+
+
+
+
+  </script>
+
+</body>
+</html>
