@@ -1,114 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Intune Functionality</title>
-  <style>
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intune</title>
+    <style>
+        /* Your existing CSS styles here */
     body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* Prevent scrollbar due to default body margin */
-        }
-        .input-details {
-            height: 30vh; /* 50% of the viewport height */
-            width: 100%;
-            display: flex;
-            color: black; /* Text color on the color sections */
-            padding-top: 20px;
-            font-style:serif ;
-            font-weight: bold;
+    font-family: "Roboto", sans-serif;
+    background: #76b852; /* Green background color */
+    background: rgb(141, 194, 111);
+    background: linear-gradient(90deg, rgba(141, 194, 111, 1) 0%, rgba(118, 184, 82, 1) 50%);
+   
+    }
 
-        }
-        .heading-details {
-            height: 5vh; /* 5% of the viewport height */
-            width: 100%;
-            display: flex;
-            justify-content: center; /* Center the content horizontally */
-            align-items: center; /* Center the content vertically */
-            text-align: center;
-            color: black; /* Text color on the color sections */
-        }
-
-
-
-.input-container {
-    margin-right: 40px; /* Adjust the right margin for space between text boxes horizontally */
-    padding: 40px;
-    color: black; /* Text color on the color sections */
-    padding-top: 20px;
-    margin-top: 20px;
-
-}
-.getUserDevices{
-    margin-top: 50px;
-    padding-top: 20px;
-    height: 20px;
-}
-
-.container {
-    height: 70vh; /* 50% of the viewport height */
-    width: 100%;
-    display: flex;
-    color: black; /* Text color on the color sections */
-}
-
-#color1 {
-    background-color: #3498db; /* Change this to the first color */
-}
-
-#color2 {
-    background-color: white; /* Change this to the second color */
-}
-
-
+    /* Center align the h1 */
     h1 {
-      margin: 20px 0;
-      color: blue; /* Set the color for the h1 element */
-    }
-
-    
-
-    h1 {
-      margin-bottom: 20px;
-    }
-
-    .action-div {
-      width: 200px;
-      height: 160px;
-      margin: 20px;
-      padding: 10px;
-      border: 2px solid #333;
-      border-radius: 8px;
-      background-color: #add8e6; /* Light Blue */
-      display: inline-block;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .action-div:hover {
-      background-color: #87ceeb; /* Slightly darker blue on hover */
-    }
-
-    .action-div h2 {
-      margin: 5px 0;
-    }
-
-    .action-div p {
-      font-size: 14px;
-      color: #333;
-      margin: 0;
-    }
-
-    .action-div img {
-      max-width: 50px; /* Adjust the maximum width of the image */
-      max-height: 50px; /* Adjust the maximum height of the image */
-      margin-bottom: 10px;
-      display: flex;
-        justify-content: center; /* Center the content horizontally */
-        align-items: center; /* Center the content vertically */
         text-align: center;
+        margin-bottom: 10px;
+        color: #fcf8f8; /* Text color */
+        font-size: 24px; /* Larger font size */
+    }
+
+    /* Styles for the Intune form (initially hidden) */
+    .container {
+        max-width: 800px;
+        margin: 20px auto; /* Add spacing below heading */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: #FFFFFF; /* White background */
+    }
+
+    .input-details {
+        display: flex;
+        align-items: center; /* Align input details horizontally */
+        flex-wrap: wrap;
+        margin-left: 200px;
+        margin-bottom: 20px;
+        margin-top:40px
+    }
+
+    .input-container {
+        flex: 0.5;
+        padding-right: 20px;
+        width: 45%; /* Adjust as needed */
+        margin-right: 15px;
+
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #4d4d4d; /* Text color */
+        font-size: 16px; /* Font size */
     }
 
     input[type="text"],
@@ -123,42 +69,106 @@
         font-size: 14px; /* Font size */
         outline: none;
     }
-    .styled-button {
-    font-size: 15px;
-    width: 10%; /* Full width */
-    padding: 14px 2px;
-    height: 10px;
-    margin-top: 150px;
-    margin-right: 15px;
-    text-align: center;
-    display: flex; /* Use flexbox */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */}
+
+    /* Center align buttons */
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 200px;
+        /* Center align buttons horizontally */
+    }
+
+    /* Set a fixed width for buttons */
+    /* Set a fixed width for buttons and make background green */
+    .button-container button {
+        width: 150px; /* Adjust the width as needed */
+        margin: 5px 0; /* Add spacing between buttons */
+        padding: 10px;
+        background-color: #4CAF50; /* Green background color */
+        color: #FFFFFF; /* Text color */
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 16px; /* Font size */
+    }
+    .button-container button:disabled {
+    opacity: 0.6; /* Reduce opacity for disabled buttons */
+    cursor: not-allowed; /* Change cursor for disabled buttons */
+    background-color: #ccc; /* Change background color for disabled buttons */
+    color: #666; /* Change text color for disabled buttons */
+   }
+    /* Button hover effect */
+    .button-container button:hover {
+        background: #43A047; /* Darker green on hover */
+    }
+
+    /* Reset and Cancel buttons */
+    .reset-button,
+    .cancel-button {
+        width: 100px; /* Adjust the width as needed */
+        background-color: #4CAF50; /* Green background color */
+        color: #FFFFFF; /* Text color */
+    }
+
+    /* Button hover effect for reset and cancel buttons */
+    .reset-button:hover,
+    .cancel-button:hover {
+        background: #43A047; /* Darker green on hover */
+    }
 
 
 
+        /* Modal styles (initially hidden) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
 
-  </style>
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+            text-align: center;
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+        }
+        .radio-group {
+            display: flex;
+            margin-top: 10px;
+            margin-left: 150px;
+            margin-bottom:10px
+        }
+        .radio-group label{
+            
+            margin-right: 100px;
+        }
+
+    </style>
 </head>
 <body>
 
-<div class="heading-details" id="color1">
-    <img src="khclogo.png" alt="Image Description" height="40px" width="300px">
-</div>
-
-  <!-- <input type="text" placeholder="Ticket No:" id="ticketNo"><br>
-  <input type="text" placeholder="User Email:" id="userEmail"><br>
-  <input type="text" placeholder="Machine Name:" id="machineName"><br> -->
-  <div class="input-details" id="color1">
-
+<h1>Intune Functionality Control</h1>
+<div class="input-details">
     <!-- Input details are arranged horizontally -->
     <div class="input-container">
         <label for="ticketNo">Ticket No:</label>
-        <input type="text" id="ticketNo" placeholder="Enter Ticket No" maxlength="10">
+        <input type="text" id="ticketNo" maxlength="10">
     </div>
     <div class="input-container">
         <label for="userEmail">User Email:</label>
-        <input type="email" id="userEmail" placeholder="Enter User Email">
+        <input type="email" id="userEmail">
     </div>
     <div class="input-container">
         <label for="machineName">Machine Name:</label>
@@ -166,84 +176,106 @@
             <option value="" selected disabled>Select a Machine</option>
         </select>
     </div>
-    <div class="input-container" style="margin-top: 40px;">
-        <button id="getUserDevices" disabled>Get User Devices</button>
-    </div>
-
-    <button class="styled-button"  id="reset">Reset</button>
-    <button class="styled-button"  id="cancel">Cancel</button>
-    
-
-</div>
-
-
-<div class="container" id="color2">
-
-
-  <div id="syncAction" class="action-div" onclick="syncFunction()">
-    <img src="sync-image.jpg" >
-    <h2>Sync</h2>
-      <p>Synchronize data between devices.</p>
-  </div>
-
-  <div id="rebootAction" class="action-div" onclick="rebootFunction()">
-    <img src="reboot-image.jpg">  
-    <h2>Reboot</h2>
-      <p>Restart the device to apply changes.</p>
-  </div>
-
-  <div id="recoveryAction" class="action-div" onclick="recoveryFunction()">
-    <img src="recovery-image.jpg" >
-    <h2>Recovery</h2>
-      <p>Enter recovery mode for troubleshooting.</p>
-  </div>
-
-  <div id="pushAppAction" class="action-div" onclick="pushAppFunction()">
-    <img src="push-app-image.jpg" >
-    <h2>Push App</h2>
-      <p>Install and deploy a new application.</p>
-  </div>
-
-  <div id="removeAppAction" class="action-div" onclick="removeAppFunction()">
-    <img src="remove-app-image.jpg">
-    <h2>Remove App</h2>
-      <p>Uninstall an existing application.</p>
-  </div>
-
-  <div id="wipeAction" class="action-div" onclick="wipeFunction()">
-    <img src="wipe-image.jpg" >
-    <h2>Wipe</h2>
-      <p>Erase all data on the device.</p>
-  </div>
-
-  <div id="remoteLockAction" class="action-div" onclick="remoteLockFunction()">
-    <img src="remote-lock-image.jpg" >
-    <h2>Remote Lock</h2>
-      <img src="remote-lock-image.jpg" >
-      <p>Lock the device remotely for security.</p>
-  </div>
-
+    <!-- Inside the "input-details" div, after the "User Email" input -->
  
 </div>
+<div class="button-container">
+    <!-- Buttons are stacked vertically -->
+    <button id="getUserDevices" disabled>Get User Devices</button>
+    <button id="sync" disabled>Sync</button>    
+    <button id="reboot" disabled>Reboot</button>
+    <button id="recoveryKey" disabled>Recovery Key</button>
+    <button id="pushApp" disabled>Push App</button>
+    <button id="removeApp" disabled>Remove App</button> 
+    <button id="remoteWipe" disabled>Remote Wipe</button>
+    <button id="remoteLock" disabled>Remote Lock</button>
+    <button class="reset-button" id="reset">Reset</button>
+    <button class="cancel-button" id="cancel">Cancel</button>
 
-  <script>
+    <!-- Add a modal for wipe options (initially hidden) -->
+    <div id="wipeModal" class="modal">
+        <div class="modal-content">
+            <h2>Choose Wipe Type</h2>
+            <button id="partialWipe">Partial Wipe</button>
+            <button id="fullWipe">Full Wipe</button>
+            <button id="closeWipeModal">Close</button>
+        </div>
+    </div>
+    
+    <!-- Add a modal for group selection (initially hidden) -->
+    <div id="groupSelectionModal" class="modal">
+        <div class="modal-content">
+            <h2>Select a Group</h2> 
+            <label for="selectGroup">Select a group:</label>
+            <select id="selectGroup">
+                <!-- Options will be added dynamically using JavaScript -->
+            </select>
+            <button id="confirmGroupButton">Confirm</button>
+            <button id="closeGroupModal">Close</button>
+        </div>
+    </div>
+   
 
+    <div id="deviceSelectionModal" class="modal">
+        <div class="modal-content">
+            <h2>Select User or Device to add in to group</h2>
+            <div class="radio-group">
+                <input type="radio" id="userOption" name="memberOption" value="user">
+                <label for="userOption">User</label>
+                <input type="radio" id="deviceOption" name="memberOption" value="device">
+                <label for="deviceOption">Device</label>
+            </div>
+            <div id="memberInfo" style="display: none;">
+                <p><strong>Selected Member:</strong> <span id="selectedMemberInfo"></span></p>
+            </div>
+            <button id="confirmMemberButton">Confirm</button>
+            <button id="closeDeviceSelectionModal">Close</button>
+        </div>
+    </div>
+
+    <div id="deviceRemovalModal" class="modal">
+        <div class="modal-content">
+            <h2>Select User or Device to Remove from the group</h2>
+            <div class="radio-group">
+                <input type="radio" id="userOption1" name="memberOption" value="user">
+                <label for="userOption1">User</label>
+                <input type="radio" id="deviceOption1" name="memberOption" value="device">
+                <label for="deviceOption1">Device</label>
+            </div>
+            <div id="memberInfo1" style="display: none;">
+                <p><strong>Selected Member:</strong> <span id="selectedMemberInfo1"></span></p>
+            </div>
+            <button id="removeDeviceUserButton">Confirm</button>
+            <button id="closeDeviceRemovalModal">Close</button>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+        
     const accessToken = localStorage.getItem('accessToken');
     const authforApp=localStorage.getItem('authforApp')
     const recovery_key_auth=localStorage.getItem('recovery_key_auth')
     const machineSelect = document.getElementById('machine');
     const devicesData = []; // Store devices data (including IDs and names)
     
+
+    
+
+    // Add event listeners to input fields to update button status
+    
     const ticketNoInput = document.getElementById('ticketNo');
     const userEmailInput = document.getElementById('userEmail');
     const getUserDevicesButton = document.getElementById('getUserDevices');
-    const syncButton = document.getElementById('syncAction');
-    const rebootButton = document.getElementById('rebootAction');
-    const recoveryKeyButton = document.getElementById('recoveryAction');
-    const pushAppButton = document.getElementById('pushAppAction');
-    const removeAppButton = document.getElementById('removeAppAction');
-    const remoteWipeButton = document.getElementById('wipeAction');
-    const remoteLockButton = document.getElementById('remoteLockAction');
+    const syncButton = document.getElementById('sync');
+    const remoteLockButton = document.getElementById('remoteLock');
+    const rebootButton = document.getElementById('reboot');
+    const recoveryKeyButton = document.getElementById('recoveryKey');
+    const pushAppButton = document.getElementById('pushApp');
+    const removeAppButton = document.getElementById('removeApp');
+    const remoteWipeButton = document.getElementById('remoteWipe');
     const resetButton = document.getElementById('reset');
     const cancelButton = document.getElementById('cancel');
 
@@ -265,7 +297,6 @@
     // Add event listeners to input fields to update button status
     ticketNoInput.addEventListener('input', updateButtonStatus);
     userEmailInput.addEventListener('input', updateButtonStatus);
-
 
     // Event listener for the reset button
     resetButton.addEventListener('click', () => {
@@ -290,7 +321,6 @@
         alert('Cancel button clicked. Implement cancel action here.');
         window.location.href = 'index.html';
     });
-
 
     // Event listener for the "Get User Devices" button
     getUserDevicesButton.addEventListener('click', () => {
@@ -339,8 +369,6 @@
             alert('Error fetching user devices. Please try again later.');
         });
     });
-
-    
     machineSelect.addEventListener('change', () => {
         // Enable the remaining buttons when a machine is selected
         syncButton.disabled = false;
@@ -351,8 +379,7 @@
         remoteWipeButton.disabled = false;
         pushAppButton.disabled = false;
     });
-
-     // Event listener for the "Sync" button
+ // Event listener for the "Sync" button
 
 syncButton.addEventListener('click', () => {
         // Get the selected device ID
@@ -469,10 +496,6 @@ rebootButton.addEventListener('click', () => {
             alert(`Remote Lock is not supported for Windows or macOS.`);
         }
     });
-    
-
-
-    
     // Event listener for the "Wipe" button
     remoteWipeButton.addEventListener('click', () => {
         // Display the wipe modal when the button is clicked
@@ -1018,9 +1041,6 @@ document.getElementById("closeWipeModal").addEventListener("click", () => {
   });
 
 
-
-
-  </script>
-
+    </script>
 </body>
 </html>
