@@ -124,13 +124,15 @@
             const enteredPassword = passwordInput.value;
 
             // Make a request to the server (server.js) with the provided username and password
-            const serverUrl = 'intunewebutility.azurewebsites.net';
+            const serverUrl = 'https://intunecontrol.azurewebsites.net';
             fetch(`${serverUrl}/getAccessToken?username=${enteredUsername}&password=${enteredPassword}`, {
                 method: 'GET',
                 // Set a timeout for the fetch request
                 timeout: 5000, // 5 seconds
             })
             .then(response => {
+
+                
                 if (response.ok) {
                     return response.json();
                 } else {
@@ -139,9 +141,9 @@
                     } else if (response.status === 401) {
                         alert('Invalid credentials. Please try again.');
                     } else {
-                        window.location.href = 'intune.html';
-
+                        // window.location.href = 'intune.html';
                         alert('Server Down. Please try again later.');
+                        
                     }
                     throw new Error('Error');
                 }
