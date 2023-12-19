@@ -179,51 +179,75 @@
 
 <div class="container" id="color2">
 
+    <!-- Buttons are stacked vertically -->
+    <button id="getUserDevices" disabled>Get User Devices</button>
+    <button id="sync" disabled>Sync</button>    
+    <button id="reboot" disabled>Reboot</button>
+    <button id="recoveryKey" disabled>Recovery Key</button>
+    <button id="pushApp" disabled>Push App</button>
+    <button id="removeApp" disabled>Remove App</button> 
+    <button id="remoteWipe" disabled>Remote Wipe</button>
+    <button id="remoteLock" disabled>Remote Lock</button>
+    <button class="reset-button" id="reset">Reset</button>
+    <button class="cancel-button" id="cancel">Cancel</button>
 
-  <div id="syncAction" class="action-div" onclick="syncFunction()">
-    <img src="sync-image.jpg" >
-    <h2>Sync</h2>
-      <p>Synchronize data between devices.</p>
-  </div>
+    <!-- Add a modal for wipe options (initially hidden) -->
+    <div id="wipeModal" class="modal">
+        <div class="modal-content">
+            <h2>Choose Wipe Type</h2>
+            <button id="partialWipe">Partial Wipe</button>
+            <button id="fullWipe">Full Wipe</button>
+            <button id="closeWipeModal">Close</button>
+        </div>
+    </div>
+    
+    <!-- Add a modal for group selection (initially hidden) -->
+    <div id="groupSelectionModal" class="modal">
+        <div class="modal-content">
+            <h2>Select a Group</h2> 
+            <label for="selectGroup">Select a group:</label>
+            <select id="selectGroup">
+                <!-- Options will be added dynamically using JavaScript -->
+            </select>
+            <button id="confirmGroupButton">Confirm</button>
+            <button id="closeGroupModal">Close</button>
+        </div>
+    </div>
+   
 
-  <div id="rebootAction" class="action-div" onclick="rebootFunction()">
-    <img src="reboot-image.jpg">  
-    <h2>Reboot</h2>
-      <p>Restart the device to apply changes.</p>
-  </div>
+    <div id="deviceSelectionModal" class="modal">
+        <div class="modal-content">
+            <h2>Select User or Device to add in to group</h2>
+            <div class="radio-group">
+                <input type="radio" id="userOption" name="memberOption" value="user">
+                <label for="userOption">User</label>
+                <input type="radio" id="deviceOption" name="memberOption" value="device">
+                <label for="deviceOption">Device</label>
+            </div>
+            <div id="memberInfo" style="display: none;">
+                <p><strong>Selected Member:</strong> <span id="selectedMemberInfo"></span></p>
+            </div>
+            <button id="confirmMemberButton">Confirm</button>
+            <button id="closeDeviceSelectionModal">Close</button>
+        </div>
+    </div>
 
-  <div id="recoveryAction" class="action-div">
-    <img src="recovery-image.jpg" >
-    <h2>Recovery</h2>
-      <p>Enter recovery mode for troubleshooting.</p>
-  </div>
-
-  <div id="pushAppAction" class="action-div" onclick="pushAppFunction()">
-    <img src="push-app-image.jpg" >
-    <h2>Push App</h2>
-      <p>Install and deploy a new application.</p>
-  </div>
-
-  <div id="removeAppAction" class="action-div" onclick="removeAppFunction()">
-    <img src="remove-app-image.jpg">
-    <h2>Remove App</h2>
-      <p>Uninstall an existing application.</p>
-  </div>
-
-  <div id="wipeAction" class="action-div" onclick="wipeFunction()">
-    <img src="wipe-image.jpg" >
-    <h2>Wipe</h2>
-      <p>Erase all data on the device.</p>
-  </div>
-
-  <div id="remoteLockAction" class="action-div" onclick="remoteLockFunction()">
-    <img src="remote-lock-image.jpg" >
-    <h2>Remote Lock</h2>
-      <img src="remote-lock-image.jpg" >
-      <p>Lock the device remotely for security.</p>
-  </div>
-
- 
+    <div id="deviceRemovalModal" class="modal">
+        <div class="modal-content">
+            <h2>Select User or Device to Remove from the group</h2>
+            <div class="radio-group">
+                <input type="radio" id="userOption1" name="memberOption" value="user">
+                <label for="userOption1">User</label>
+                <input type="radio" id="deviceOption1" name="memberOption" value="device">
+                <label for="deviceOption1">Device</label>
+            </div>
+            <div id="memberInfo1" style="display: none;">
+                <p><strong>Selected Member:</strong> <span id="selectedMemberInfo1"></span></p>
+            </div>
+            <button id="removeDeviceUserButton">Confirm</button>
+            <button id="closeDeviceRemovalModal">Close</button>
+        </div>
+    </div>
 </div>
 
   <script>
@@ -577,9 +601,9 @@ rebootButton.addEventListener('click', () => {
         document.getElementById('wipeModal').style.display = 'none';
     });
     
-    
 
-    recoveryAction.addEventListener('click', async () => {
+
+    recoveryKeyButton.addEventListener('click', async () => {
     // Get the selected device ID
     const selectedDeviceId = machineSelect.options[machineSelect.selectedIndex].azureADDeviceId;
     const selectedDeviceName = machineSelect.options[machineSelect.selectedIndex].text;
