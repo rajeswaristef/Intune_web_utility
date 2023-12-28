@@ -227,6 +227,63 @@
         <span>Lock the device remotely for security.</span>
       </button>
       
+          <!-- Add a modal for wipe options (initially hidden) -->
+    <div id="wipeModal" class="modal">
+        <div class="modal-content">
+            <h2>Choose Wipe Type</h2>
+            <button id="partialWipe">Partial Wipe</button>
+            <button id="fullWipe">Full Wipe</button>
+            <button id="closeWipeModal">Close</button>
+        </div>
+    </div>
+    
+    <!-- Add a modal for group selection (initially hidden) -->
+    <div id="groupSelectionModal" class="modal">
+        <div class="modal-content">
+            <h2>Select a Group</h2> 
+            <label for="selectGroup">Select a group:</label>
+            <select id="selectGroup">
+                <!-- Options will be added dynamically using JavaScript -->
+            </select>
+            <button id="confirmGroupButton">Confirm</button>
+            <button id="closeGroupModal">Close</button>
+        </div>
+    </div>
+   
+
+    <div id="deviceSelectionModal" class="modal">
+        <div class="modal-content">
+            <h2>Select User or Device to add in to group</h2>
+            <div class="radio-group">
+                <input type="radio" id="userOption" name="memberOption" value="user">
+                <label for="userOption">User</label>
+                <input type="radio" id="deviceOption" name="memberOption" value="device">
+                <label for="deviceOption">Device</label>
+            </div>
+            <div id="memberInfo" style="display: none;">
+                <p><strong>Selected Member:</strong> <span id="selectedMemberInfo"></span></p>
+            </div>
+            <button id="confirmMemberButton">Confirm</button>
+            <button id="closeDeviceSelectionModal">Close</button>
+        </div>
+    </div>
+
+    <div id="deviceRemovalModal" class="modal">
+        <div class="modal-content">
+            <h2>Select User or Device to Remove from the group</h2>
+            <div class="radio-group">
+                <input type="radio" id="userOption1" name="memberOption" value="user">
+                <label for="userOption1">User</label>
+                <input type="radio" id="deviceOption1" name="memberOption" value="device">
+                <label for="deviceOption1">Device</label>
+            </div>
+            <div id="memberInfo1" style="display: none;">
+                <p><strong>Selected Member:</strong> <span id="selectedMemberInfo1"></span></p>
+            </div>
+            <button id="removeDeviceUserButton">Confirm</button>
+            <button id="closeDeviceRemovalModal">Close</button>
+        </div>
+    </div>
 
  
 </div>
@@ -251,6 +308,8 @@
     const remoteLockButton = document.getElementById('remoteLockAction');
     const resetButton = document.getElementById('reset');
     const cancelButton = document.getElementById('cancel');
+
+
 
     function isEmailValid(email) {
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
