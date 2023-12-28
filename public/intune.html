@@ -33,19 +33,7 @@
 
 
 
-.input-container {
-    margin-right: 40px; /* Adjust the right margin for space between text boxes horizontally */
-    padding: 40px;
-    color: black; /* Text color on the color sections */
-    padding-top: 20px;
-    margin-top: 20px;
 
-}
-.getUserDevices{
-    margin-top: 50px;
-    padding-top: 20px;
-    height: 20px;
-}
 
 .container {
     height: 70vh; /* 50% of the viewport height */
@@ -66,13 +54,10 @@
     h1 {
       margin: 20px 0;
       color: blue; /* Set the color for the h1 element */
-    }
-
-    
-
-    h1 {
       margin-bottom: 20px;
+
     }
+
 
     .action-div {
       width: 200px;
@@ -140,7 +125,30 @@
         pointer-events: none; /* Disable pointer events to prevent user interaction */
     }
 
+    .input-container {
+        margin-top: 15px; /* Adjust margin as needed */
+        padding: 40px;
+    }
 
+    label {
+        display: block;
+        margin-bottom: 5px; /* Adjust margin as needed */
+    }
+
+    input,
+    select,
+    button {
+        width: 200px; /* Adjust width as needed */
+        height: 30px; /* Adjust height as needed */
+    }
+    #machine {
+        height: 50px; /* Adjust height as needed */
+    }    
+    .input-container button {
+        margin-top: 25px; /* Adjust the margin-top as needed */
+        width: 180px;
+        height: 50px;
+    }
   </style>
 </head>
 <body>
@@ -154,26 +162,28 @@
   <input type="text" placeholder="Machine Name:" id="machineName"><br> -->
   <div class="input-details" id="color1">
 
-    <!-- Input details are arranged horizontally -->
     <div class="input-container">
         <label for="ticketNo">Ticket No:</label>
         <input type="text" id="ticketNo" placeholder="Enter Ticket No" maxlength="10">
     </div>
+    
     <div class="input-container">
         <label for="userEmail">User Email:</label>
         <input type="email" id="userEmail" placeholder="Enter User Email">
     </div>
+    
     <div class="input-container">
         <label for="machineName">Machine Name:</label>
         <select id="machine" name="machine" required disabled>
             <option value="" selected disabled>Select a Machine</option>
         </select>
     </div>
-    <div class="input-container" style="margin-top: 40px;">
-        <button id="getUserDevices" disabled>Get User Devices</button>
+    
+    <div class="input-container">
+        <button type="button" id="getUserDevices" placeholder="Get User Devices">Get User Devices</button>
     </div>
 
-    <button class="styled-button"  id="reset">Reset</button>
+    <button class="styled-button"  id="reset">Reset Form</button>
     <button class="styled-button"  id="cancel">Cancel</button>
     
 
