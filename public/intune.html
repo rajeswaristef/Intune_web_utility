@@ -31,6 +31,24 @@
             color: black; /* Text color on the color sections */
         }
 
+        label {
+        display: block;
+        margin-bottom: 5px;
+        color: #4d4d4d; /* Text color */
+        font-size: 16px; /* Font size */
+    }
+    .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
         .modal-content {
             background-color: #fefefe;
             margin: 15% auto;
@@ -169,6 +187,17 @@
         width: 180px;
         height: 50px;
     }
+
+    #reset {
+        width: 100px; /* Adjust the width as needed */
+        color: #000000;    }
+
+    #cancel {
+        width: 100px; /* Adjust the width as needed */
+        color: #000000;    }
+
+    
+
   </style>
 </head>
 <body>
@@ -200,7 +229,7 @@
     </div>
     
     <div class="input-container">
-        <button type="button" id="getUserDevices" placeholder="Get User Devices">Get User Devices</button>
+        <button type="button" id="getUserDevices" placeholder="Get User Devices" disabled>Get User Devices</button>
     </div>
 
     <button class="styled-button"  id="reset">Reset Form</button>
