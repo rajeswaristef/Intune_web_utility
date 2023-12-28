@@ -19,6 +19,7 @@
             padding-top: 20px;
             font-style:serif ;
             font-weight: bold;
+
         }
         .heading-details {
             height: 5vh; /* 5% of the viewport height */
@@ -134,7 +135,10 @@
     align-items: center; /* Center vertically */
     justify-content: center; /* Center horizontally */}
 
-
+    button:disabled {
+        opacity: 0.5; /* Optional: Add a visual indication that the button is disabled */
+        pointer-events: none; /* Disable pointer events to prevent user interaction */
+    }
 
 
   </style>
@@ -183,39 +187,33 @@
         <span>Synchronize data between devices.</span>
       </button>  
 
-      <button id="rebootAction" class="action-div">
+      <button id="rebootAction" class="action-div" disabled>
         <p>Reboot</p>
-        
         <span>Restart the device to apply changes.</span>
       </button>
       
-      <button id="recoveryAction" class="action-div">
+      <button id="recoveryAction" class="action-div" disabled>
         <p>Recovery</p>
-       
         <span>Enter recovery mode for troubleshooting.</span>
       </button>
       
-      <button id="pushAppAction" class="action-div">
+      <button id="pushAppAction" class="action-div" disabled>
         <p>Push App</p>
-        <img src="push-app-image.jpg">
         <span>Install and deploy a new application.</span>
       </button>
       
-      <button id="removeAppAction" class="action-div">
+      <button id="removeAppAction" class="action-div" disabled>
         <p>Remove App</p>
-       
         <span>Uninstall an existing application.</span>
       </button>
       
-      <button id="wipeAction" class="action-div">
+      <button id="wipeAction" class="action-div" disabled>
         <p>Wipe</p>
-        <img src="wipe-image.jpg">
         <span>Erase all data on the device.</span>
       </button>
       
-      <button id="remoteLockAction" class="action-div">
+      <button id="remoteLockAction" class="action-div" disabled>
         <p>Remote Lock</p>
-       
         <span>Lock the device remotely for security.</span>
       </button>
       
