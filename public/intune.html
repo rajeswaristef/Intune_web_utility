@@ -891,15 +891,21 @@ function createDeviceUserSelectionDialog(selectedDeviceId, selectedDeviceName, u
 
             if (isAdded) {
                 alert(`${selectedOption === 'user' ? 'User' : 'Device'} has been successfully added to the group.`);
-            } else {
+            } 
+            else {
                 alert(`Failed to add ${selectedOption === 'user' ? 'User' : 'Device'} to the group.`);
             }
         }
 
         // Close the modal
         deviceSelectionModal.style.display = 'none';
+        // Remove the click event listener after execution
+        confirmMemberButton.removeEventListener('click', confirmButtonClickHandler);
        
     });
+     // Add a click event listener to the confirm button
+     confirmMemberButton.addEventListener('click', confirmButtonClickHandler);
+
 
     deviceSelectionModal.style.display = 'block';
 }
