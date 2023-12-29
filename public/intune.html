@@ -967,9 +967,6 @@ fetch(`https://graph.microsoft.com/v1.0/devices`, {
 .then(devicesData => {
     const matchingDevice = devicesData.value.find(device => device.deviceId === deviceId);
     if (matchingDevice) {
-        const body = {
-            '@odata.id': `https://graph.microsoft.com/v1.0/devices/${matchingDevice.id}`
-        };
 
         return fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members/$ref`, {
             method: 'DELETE',
