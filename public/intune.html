@@ -888,7 +888,7 @@ function handleUserRemove(selectedApp,selectedDeviceId,userEmail) {
                     if (userGroups.length > 0) {
                         displayUserGroupsDialog(userGroups,selectedDeviceId,userEmail);
                     } else {
-                        alert('No user groups found to add the app. Please check in Intune portal manually.');
+                        alert('No user groups found to remove the app. Please check in Intune portal manually.');
                     }
                 })
                 .catch(error => {
@@ -967,11 +967,14 @@ fetch(`https://graph.microsoft.com/v1.0/devices`, {
 .then(devicesData => {
     const matchingDevice = devicesData.value.find(device => device.deviceId === deviceId);
     if (matchingDevice) {
-
+        const body = {
+                '@odata.id': `https://graph.microsoft.com/v1.0/devices/${matchingDevice.id}`
+            };
         return fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members/$ref`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${authforApp}`,
+                'Content-Type': 'application/json' // Include Content-Type header
             },
         });
     } else {
@@ -1001,6 +1004,7 @@ function removeUserToGroup(groupId,groupName,userEmail)
         method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${authforApp}`,
+            'Content-Type': 'application/json' // Include Content-Type header
         },
     })
     .then(response => {
