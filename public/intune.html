@@ -384,11 +384,11 @@
     <div id="appListForDataType" class="scrollable-dialog"></div>
 </div>
 
-<div id="pushSelectionDialog" class="dialog">
+<div id="removeSelectionDialog" class="dialog">
     <span id="closeDialogButton" class="close">&times;</span>
-    <p>Where do you want to push the application?</p>
-    <button id="pushToDeviceButton">Push to Device</button>
-    <button id="pushToUserButton">Push to User</button>
+    <p>Where do you want to remove the application?</p>
+    <button id="removeToDeviceButton"> Remove to Device</button>
+    <button id="removeToUserButton">Remove to User</button>
     
 </div>
 
@@ -646,45 +646,45 @@ function handleAppSelection(index, appsList,selectedDeviceId,userEmail) {
     const selectedApp = appsList[index];
 
     if (selectedApp) {
-        // Show dialog to select where to push the application (to a device or a user)
-        displayPushSelectionDialog(selectedApp,selectedDeviceId,userEmail);
+        // Show dialog to select where to remove the application (to a device or a user)
+        displayRemoveSelectionDialog(selectedApp,selectedDeviceId,userEmail);
     } else {
         alert('Error: Unable to retrieve details for the selected application.');
     }
 }
 
 
-let devicePushListener, userPushListener, closeDialogListener;
+let deviceRemoveListener, userRemoveListener, closeDialogListener;
 
 // Function to display the push selection dialog
-function displayPushSelectionDialog(selectedApp,selectedDeviceId,userEmail) {
-    const pushDialog = document.getElementById('pushSelectionDialog');
-    pushDialog.style.display = 'block';
+function displayRemoveSelectionDialog(selectedApp,selectedDeviceId,userEmail) {
+    const removeDialog = document.getElementById('removeSelectionDialog');
+    removeDialog.style.display = 'block';
 
-    const pushToDeviceButton = document.getElementById('pushToDeviceButton');
-    const pushToUserButton = document.getElementById('pushToUserButton');
+    const removeToDeviceButton = document.getElementById('removeToDeviceButton');
+    const removeToUserButton = document.getElementById('removeToUserButton');
     const closeDialogButton = document.getElementById('closeDialogButton');
 
     // Remove previous event listeners
-    pushToDeviceButton.removeEventListener('click', devicePushListener);
-    pushToUserButton.removeEventListener('click', userPushListener);
+    removeToDeviceButton.removeEventListener('click', deviceRemoveListener);
+    removeToUserButton.removeEventListener('click', userRemoveListener);
     closeDialogButton.removeEventListener('click', closeDialogListener);
 
     // Set up event listeners
-    devicePushListener = () => {
+    deviceRemoveListener = () => {
         handleDeviceSelection(selectedApp,selectedDeviceId,userEmail);
-        pushDialog.style.display = 'none';
+        removeDialog.style.display = 'none';
     };
-    userPushListener = () => {
-        handleUserPush(selectedApp,selectedDeviceId,userEmail);
-        pushDialog.style.display = 'none';
+    userRemoveListener = () => {
+        handleUserRemove(selectedApp,selectedDeviceId,userEmail);
+        removeDialog.style.display = 'none';
     };
     closeDialogListener = () => {
-        pushDialog.style.display = 'none';
+        removeDialog.style.display = 'none';
     };
 
-    pushToDeviceButton.addEventListener('click', devicePushListener);
-    pushToUserButton.addEventListener('click', userPushListener);
+    removeToDeviceButton.addEventListener('click', deviceRemoveListener);
+    removeToUserButton.addEventListener('click', userRemoveListener);
     closeDialogButton.addEventListener('click', closeDialogListener);
 }
 
@@ -804,7 +804,7 @@ function displayDeviceGroupsDialog(deviceGroups,selectedDeviceId,userEmail) {
         groupItem.classList.add('group-item');
         groupItem.textContent = `Group Name: ${group.groupName}, Intent: ${group.intent}`;
         groupItem.addEventListener('click', () => {
-            const confirmation = confirm(`Do you want to add the device to group: ${group.groupName}?`);
+            const confirmation = confirm(`Do you want to remove the device to group: ${group.groupName}?`);
             if (confirmation) {
                 fetchGroupID(group.groupName)
                         .then(groupID => {
@@ -920,14 +920,14 @@ function displayUserGroupsDialog(userGroups,selectedDeviceId,userEmail) {
         groupItem.classList.add('group-item');
         groupItem.textContent = `Group Name: ${group.groupName}, Intent: ${group.intent}`;
         groupItem.addEventListener('click', () => {
-            const confirmation = confirm(`Do you want to add the app to group: ${group.groupName}?`);
+            const confirmation = confirm(`Do you want to remove the app to group: ${group.groupName}?`);
             if (confirmation) {
                 
                 fetchGroupID(group.groupName)
                         .then(groupID => {
                             if (groupID) {
                                 
-                                addUserToGroup(groupID,group.groupName,userEmail)
+                                removeUserToGroup(groupID,group.groupName,userEmail)
                             } else {
                                 alert('Group ID not found.');
                             }
