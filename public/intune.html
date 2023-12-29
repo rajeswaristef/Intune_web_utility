@@ -810,7 +810,7 @@ function displayDeviceGroupsDialog(deviceGroups,selectedDeviceId,userEmail) {
                         .then(groupID => {
                             if (groupID) {
                                 
-                                addDeviceToGroup(groupID,group.groupName,selectedDeviceId)
+                                removeDeviceToGroup(groupID,group.groupName,selectedDeviceId)
                             } else {
                                 alert('Group ID not found.');
                             }
