@@ -247,7 +247,8 @@
 
     <button class="styled-button"  id="reset">Reset Form</button>
     <button class="styled-button"  id="cancel">Cancel</button>
-    
+
+
 
 </div>
 
@@ -349,6 +350,80 @@
 
  
 </div>
+
+<div class="app-modal-container">
+    <!-- Modal for displaying app list -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Select an application </h2>
+            <div id="appList" class="app-list"></div>
+        </div>
+    </div>
+</div>
+
+<!-- The modal -->
+<div id="assignmentModal" class="modal">
+    <div id="modalContent" class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Assignments:</h2>
+        <div id="requiredSection" class="content-section">
+            <h3>Required:</h3>
+            <div id="requiredGroups" class="group-section"></div>
+            <div id="requiredUsers" class="user-section"></div>
+        </div>
+        <div id="availableSection" class="content-section">
+            <h3>Available for enrolled Devices:</h3>
+            <div id="availableGroups" class="group-section"></div>
+            <div id="availableUsers" class="user-section"></div>
+        </div>
+        <div id="uninstallSection" class="content-section">
+            <h3>Uninstall:</h3>
+            <div id="uninstallGroups" class="group-section"></div>
+            <div id="uninstallUsers" class="user-section"></div>
+        </div>
+    </div>
+</div>
+
+
+<div id="dataTypeDialog" class="dialog">
+    <span class="close">&times;</span>
+    <h3>Select a Data Type:</h3>
+    <div id="dataTypeList" class="scrollable-dialog"></div>
+    
+  </div>
+  
+<div id="appsForDataTypeDialog" class="dialog">
+    <span class="close">&times;</span>
+    <h3>Select an App:</h3>
+    <div id="appListForDataType" class="scrollable-dialog"></div>
+</div>
+
+<div id="pushSelectionDialog" class="dialog">
+    <span id="closeDialogButton" class="close">&times;</span>
+    <p>Where do you want to push the application?</p>
+    <button id="pushToDeviceButton">Push to Device</button>
+    <button id="pushToUserButton">Push to User</button>
+    
+</div>
+
+<div id="deviceGroupsDialog" class="dialog">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Device Groups:</h2>
+        <div id="deviceGroupsContent" class="content-section"></div>
+    </div>
+</div>
+
+<div id="userGroupsDialog" class="dialog">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Users Groups:</h2>
+        <div id="userGroupsContent" class="content-section"></div>
+    </div>
+
+</div>
+
 
   <script>
 
