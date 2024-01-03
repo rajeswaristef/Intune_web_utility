@@ -949,7 +949,7 @@ function displayUserGroupsDialog(userGroups,selectedDeviceId,userEmail) {
     };
 }
 
-function removeDeviceFromGroup(groupId, groupName, deviceId) {
+function removeDeviceToGroup(groupId, groupName, deviceId) {
     fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members/${deviceId}/$ref`, {
         method: 'DELETE',
         headers: {
