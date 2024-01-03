@@ -969,7 +969,7 @@ function removeDeviceToGroup(groupId, groupName, deviceId)
                 '@odata.id': `https://graph.microsoft.com/v1.0/devices/${matchingDevice.id}`
             };
 
-            return fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members/$ref`, {
+            return fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members/${matchingDevice.id}/$ref`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${authforApp}`,
