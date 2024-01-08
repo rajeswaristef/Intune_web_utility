@@ -89,7 +89,7 @@ button:hover {
         const enteredPassword = passwordInput.value;
 
         // Make a request to the server (server.js) with the provided username and password
-        const serverUrl = 'https://intunecontrol.azurewebsites.net';
+        const serverUrl = 'https://intune-web-test.azurewebsites.net';
         fetch(`${serverUrl}/getAccessToken?username=${enteredUsername}&password=${enteredPassword}`, {
             method: 'GET',
             // Set a timeout for the fetch request
