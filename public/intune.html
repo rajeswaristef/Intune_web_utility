@@ -1594,9 +1594,7 @@ function addDeviceToGroup(groupId,groupName,deviceId)
 }
 
 
-
-function removeDeviceToGroup(groupId, groupName, deviceId) 
-{
+function removeDeviceToGroup(groupId, groupName, deviceId) {
     fetch(`https://graph.microsoft.com/v1.0/devices`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`
@@ -1610,10 +1608,7 @@ function removeDeviceToGroup(groupId, groupName, deviceId)
     })
     .then(devicesData => {
         const matchingDevice = devicesData.value.find(device => device.deviceId === deviceId);
-        console.log('Matching Device:', matchingDevice);
         if (matchingDevice) {
-            console.log('Matching Device:', matchingDevice);
-
             const body = {
                 '@odata.id': `https://graph.microsoft.com/v1.0/devices/${matchingDevice.id}`
             };
@@ -1626,24 +1621,21 @@ function removeDeviceToGroup(groupId, groupName, deviceId)
                 },
             });
         } else {
-            throw new Error('Device not found.');
+            throw new Error(`Device with ID ${deviceId} not found.`);
         }
     })
     .then(response => {
         if (response.ok) {
-            alert(`Device removed from group : ${groupName}`);
+            alert(`Device removed from group: ${groupName}`);
         } else {
-            alert('failed to remove device')
+            throw new Error(`Failed to remove device. Status: ${response.status}`);
         }
     })
     .catch(error => {
         console.error('Error removing device to group:', error);
         alert('Failed to remove device to group. Please check your network connection or try again later.');
     });
-
-
 }
-
 
 
 function addUserToGroup(groupId,groupName,userEmail) {
