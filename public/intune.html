@@ -1303,10 +1303,10 @@ function displayDeviceGroupsDialog(deviceGroups,selectedDeviceId,userEmail,actio
         groupItem.addEventListener('click', () => {
 
             if (action_item === 'push') {
-                const confirmation = confirm(`Do you want to add the app to group: ${group.groupName}?`);
+                 confirmation = confirm(`Do you want to add the app to group: ${group.groupName}?`);
 
             } else if (action_item === 'remove') {
-                const confirmation = confirm(`Do you want to remove the app to group: ${group.groupName}?`);
+                 confirmation = confirm(`Do you want to remove the app to group: ${group.groupName}?`);
             }
 
             if (confirmation) {
@@ -1503,10 +1503,10 @@ function displayUserGroupsDialog(userGroups,selectedDeviceId,userEmail,action_it
         groupItem.textContent = `Group Name: ${group.groupName}, Intent: ${group.intent}`;
         groupItem.addEventListener('click', () => {
             if (action_item === 'push') {
-                const confirmation = confirm(`Do you want to add the app to group: ${group.groupName}?`);
+                 confirmation = confirm(`Do you want to add the app to group: ${group.groupName}?`);
 
             } else if (action_item === 'remove') {
-                const confirmation = confirm(`Do you want to remove the app to group: ${group.groupName}?`);
+                 confirmation = confirm(`Do you want to remove the app to group: ${group.groupName}?`);
             }
             if (confirmation) {
                 
