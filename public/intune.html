@@ -1612,6 +1612,8 @@ function removeDeviceToGroup(groupId, groupName, deviceId)
         const matchingDevice = devicesData.value.find(device => device.deviceId === deviceId);
         console.log('Matching Device:', matchingDevice);
         if (matchingDevice) {
+            console.log('Matching Device:', matchingDevice);
+
             const body = {
                 '@odata.id': `https://graph.microsoft.com/v1.0/devices/${matchingDevice.id}`
             };
