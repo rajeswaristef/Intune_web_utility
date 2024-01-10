@@ -1340,7 +1340,7 @@ function displayDeviceGroupsDialog(deviceGroups,selectedDeviceId,userEmail,actio
                                     console.log(userEmail)
                                     console.log("calling removeDeviceToGroup function..")
 
-                                    removeDeviceToGroup(groupID,group.groupName,userEmail)
+                                    removeDeviceToGroup(groupID,group.groupName,selectedDeviceId)
                                 }
                             } else {
                                 alert('Group ID not found.');
