@@ -1335,7 +1335,11 @@ function displayDeviceGroupsDialog(deviceGroups,selectedDeviceId,userEmail,actio
                                 }
                                 else if (action_item === 'remove') 
                                 {
+                                    console.log(groupID)
+                                    console.log(group.groupName)
+                                    console.log(userEmail)
                                     console.log("calling removeDeviceToGroup function..")
+
                                     removeDeviceToGroup(groupID,group.groupName,userEmail)
                                 }
                             } else {
@@ -1636,8 +1640,7 @@ function removeDeviceToGroup(groupId, groupName, deviceId) {
             return fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members/${matchingDevice.id}/$ref`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${authforApp}`,
-                    'Content-Type': 'application/json'
+                    'Authorization': `Bearer ${authforApp}`
                 },
             });
         } else {
