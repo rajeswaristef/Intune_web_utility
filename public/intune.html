@@ -1630,6 +1630,12 @@ function removeDeviceToGroup(groupId, groupName, deviceId) {
         }
         return response.json();
     })
+    
+    .then(data => {
+    // `data` here is the parsed JSON from the response
+    console.log(data);
+  })
+
     .then(devicesData => {
         const matchingDevice = devicesData.value.find(device => device.deviceId === deviceId);
         if (matchingDevice) {
