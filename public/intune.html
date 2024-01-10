@@ -982,6 +982,7 @@ pushAppButton.addEventListener('click', () => {
 
 removeAppButton.addEventListener('click', () => {
     action_item = "remove"
+    console.log("inside remove app button")
     const selectedDeviceId = machineSelect.options[machineSelect.selectedIndex].azureADDeviceId;
     const selectedDeviceName = machineSelect.options[machineSelect.selectedIndex].text;
     const userEmail = userEmailInput.value.trim();
@@ -1012,6 +1013,8 @@ removeAppButton.addEventListener('click', () => {
 
 
 function showDataTypesDialog(dataTypes,selectedDeviceId,userEmail,action_item) {
+    console.log("inside showDataTypesDialog function")
+
     // Assuming you have a dialog element with an ID 'dataTypeDialog'
     const dataTypeDialog = document.getElementById('dataTypeDialog');
     const dataTypeList = document.getElementById('dataTypeList'); // Element to display data types
@@ -1045,6 +1048,7 @@ function showDataTypesDialog(dataTypes,selectedDeviceId,userEmail,action_item) {
 
 // Function to handle data type selection
 function handleDataTypeSelection(selectedDataType,selectedDeviceId,userEmail,action_item) {
+console.log("inside handleDataTypeSelection function")
 
 // Retrieve apps based on selected data type
 const appsForSelectedType = retrievedApps.filter(app => app['@odata.type'] === selectedDataType);
@@ -1062,6 +1066,8 @@ if (appsForSelectedType.length > 0) {
 
 // Function to display apps for a selected data type in a new dialog
 function showAppsForDataTypeDialog(appNames, appsData,appsList,selectedDeviceId,userEmail,action_item) {
+    console.log("inside showAppsForDataTypeDialog function")
+
 // Assuming you have a dialog element with an ID 'appsForDataTypeDialog'
 const appsForDataTypeDialog = document.getElementById('appsForDataTypeDialog');
 const appListForDataType = document.getElementById('appListForDataType'); // Element to display apps
@@ -1098,6 +1104,8 @@ modal1.style.display = 'none';
 // Function to handle selection of an application using the retrievedApps array
 function handleAppSelection(index, appsList,selectedDeviceId,userEmail,action_item) {
     const selectedApp = appsList[index];
+    console.log("inside handleAppSelection function")
+
 
     if (selectedApp) {
         if (action_item === 'push') 
@@ -1107,7 +1115,9 @@ function handleAppSelection(index, appsList,selectedDeviceId,userEmail,action_it
         } 
         else if (action_item === 'remove') 
         {
-                // Show dialog to select where to push the application (to a device or a user)
+            console.log("calling displayRemoveSelectionDialog function")
+ 
+            // Show dialog to select where to push the application (to a device or a user)
                 displayRemoveSelectionDialog(selectedApp,selectedDeviceId,userEmail,action_item);        }
 
     } else {
@@ -1153,6 +1163,8 @@ function displayPushSelectionDialog(selectedApp,selectedDeviceId,userEmail,actio
 
 // Function to display the push selection dialog
 function displayRemoveSelectionDialog(selectedApp,selectedDeviceId,userEmail,action_item) {
+    console.log("inside displayRemoveSelectionDialog function")
+
     const removeDialog = document.getElementById('removeSelectionDialog');
     removeDialog.style.display = 'block';
 
@@ -1187,9 +1199,10 @@ function displayRemoveSelectionDialog(selectedApp,selectedDeviceId,userEmail,act
 
 
 
-// ... (Previous code remains the same)
 
 function handleDeviceSelection(selectedApp,selectedDeviceId,userEmail,action_item) {
+    console.log("inside handleDeviceSelection function")
+
     const mobileAppId = selectedApp.id;
 
     fetch(`https://graph.microsoft.com/v1.0/deviceAppManagement/mobileApps/${mobileAppId}/assignments`, {
@@ -1240,6 +1253,7 @@ function handleDeviceSelection(selectedApp,selectedDeviceId,userEmail,action_ite
             Promise.all(promises)
                 .then(() => {
                     if (deviceGroups.length > 0) {
+                        console.log(" calling displayDeviceGroupsDialog.....")
                         displayDeviceGroupsDialog(deviceGroups,selectedDeviceId,userEmail,action_item);
                     } else {
                         
@@ -1288,6 +1302,8 @@ function fetchGroupMembers(groupId) {
 
 
 function displayDeviceGroupsDialog(deviceGroups,selectedDeviceId,userEmail,action_item) {
+    console.log(" inside displayDeviceGroupsDialog.....")
+
     const deviceGroupsDialog = document.getElementById('deviceGroupsDialog');
     const deviceGroupsContent = document.getElementById('deviceGroupsContent');
 
@@ -1319,7 +1335,7 @@ function displayDeviceGroupsDialog(deviceGroups,selectedDeviceId,userEmail,actio
                                 }
                                 else if (action_item === 'remove') 
                                 {
-                                    console.log("inside remove func. displayDeviceGroupsDialog function..")
+                                    console.log("calling removeDeviceToGroup function..")
                                     removeDeviceToGroup(groupID,group.groupName,userEmail)
                                 }
                             } else {
@@ -1598,6 +1614,7 @@ function addDeviceToGroup(groupId,groupName,deviceId)
 
 
 function removeDeviceToGroup(groupId, groupName, deviceId) {
+    console.log("inside removeDeviceToGroup")
     fetch(`https://graph.microsoft.com/v1.0/devices`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`
