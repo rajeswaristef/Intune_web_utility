@@ -813,7 +813,10 @@ function displayDeviceGroupsDialog(deviceGroups,selectedDeviceId,userEmail) {
                 fetchGroupID(group.groupName)
                         .then(groupID => {
                             if (groupID) {
-                                
+                                console.log(groupID)
+                                console.log(group.groupName)
+                                console.log(userEmail)
+                                console.log("calling removeDeviceToGroup function..")
                                 removeDeviceToGroup(groupID,group.groupName,selectedDeviceId)
                             } else {
                                 alert('Group ID not found.');
@@ -971,7 +974,7 @@ function removeDeviceToGroup(groupId, groupName, deviceId)
     // `data` here is the parsed JSON from the response
     console.log(data);
   })
-  
+
     .then(devicesData => {
         const matchingDevice = devicesData.value.find(device => device.deviceId === deviceId);
         console.log('Matching Device:', matchingDevice);
