@@ -342,7 +342,7 @@
     </div>
 
     <button class="styled-button"  id="reset">Reset Form</button>
-    <button class="styled-button"  id="cancel">Cancel</button>
+    <button class="styled-button"  id="cancel">Logout</button>
 
 
 
@@ -596,7 +596,9 @@
     cancelButton.addEventListener('click', () => {
         // Implement the cancel action here (e.g., close the form)
         alert('Cancel button clicked. Implement cancel action here.');
-        window.location.href = 'index.html';
+        //window.location.href = 'index.html';
+        window.location.replace('index.html');
+
     });
 
 
