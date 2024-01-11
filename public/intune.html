@@ -594,10 +594,24 @@
 
     // Event listener for the cancel button
     cancelButton.addEventListener('click', () => {
+
+        if (confirm('Logout button clicked. Do you want to logout?')) {
+            // User clicked "OK"
+            // Perform the logout action or redirect to the logout page
+            console.log('Logout confirmed. Logging out...');
+            window.location.replace('index.html');
+
+        } else {
+            // User clicked "Cancel"
+            // No action needed or handle the cancellation as per your requirement
+            console.log('Logout canceled.');
+        }
+
+
         // Implement the cancel action here (e.g., close the form)
-        alert('Cancel button clicked. Implement cancel action here.');
+        //alert('Logout button clicked. Do you want to logout?');
         //window.location.href = 'index.html';
-        window.location.replace('index.html');
+        //window.location.replace('index.html');
 
     });
 
