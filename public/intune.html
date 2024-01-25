@@ -1586,52 +1586,93 @@ function displayUserGroupsDialog(userGroups,selectedDeviceId,userEmail,action_it
 
 function addDeviceToGroup(groupId,groupName,deviceId) 
 {    
-    fetch(`https://graph.microsoft.com/v1.0/devices`, {
+      // Check if the device is already part of the group
+    checkIfDeviceExistsInGroup(deviceId, groupId, authforApp)
+        .then(function (isDeviceInGroup) {
+            if (isDeviceInGroup) {
+                alert(`Device is already an existing member of the group "${groupName}"`);
+                closeallDeviceDialogs();
+                return Promise.reject('Device is already part of the group');
+            }
+
+            // Continue with adding the device to the group
+            return fetch(`https://graph.microsoft.com/v1.0/devices`, {
+                headers: {
+                    'Authorization': `Bearer ${authforApp}`
+                }
+            });
+        })
+        .then(function (response) {
+            if (!response.ok) {
+                
+                    throw new Error(`Failed to fetch devices. Status: ${response.status}`);
+                
+            }
+            return response.json();
+        })
+        .then(function (devicesData) {
+            const matchingDevice = devicesData.value.find(function (device) {
+                return device.deviceId === deviceId;
+            });
+            if (matchingDevice) {
+                const body = {
+                    '@odata.id': `https://graph.microsoft.com/v1.0/devices/${matchingDevice.id}`
+                };
+
+                // Add the device to the group
+                return fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members/$ref`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authforApp}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+            } else {
+                throw new Error('Device not found.');
+            }
+        })
+        .then(function (response) {
+            if (response.ok) {
+                alert(`Device is added to group "${groupName}" successfully  `);
+                closeallDeviceDialogs();
+            } 
+            else if (response.status === 403) {
+                    alert('You do not have enough permission to add devices to this group.');
+                    
+                }
+                else {
+                alert('Failed to add device to the group');
+            }
+        })
+        .catch(function (error) {
+            console.error('Error adding device to group:', error);
+            
+        });
+}
+// Function to check if a device exists in the group
+function checkIfDeviceExistsInGroup(selectedDeviceId, selectedGroupId, accessToken) {
+    return fetch(`https://graph.microsoft.com/v1.0/groups/${selectedGroupId}/members/microsoft.graph.device`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Failed to fetch devices. Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(devicesData => {
-        const matchingDevice = devicesData.value.find(device => device.deviceId === deviceId);
-        if (matchingDevice) {
-            const body = {
-                '@odata.id': `https://graph.microsoft.com/v1.0/devices/${matchingDevice.id}`
-            };
-
-            return fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members/$ref`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${authforApp}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch device members. Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(function (deviceMembersData) {
+            return deviceMembersData.value.some(function (device) {
+                return device.deviceId === selectedDeviceId;
             });
-        } else {
-            throw new Error('Device not found.');
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            alert(`Device added to group : ${groupName}`);
-        } else {
-            alert('failed to add device')
-        }
-    })
-    .catch(error => {
-        console.error('Error adding device to group:', error);
-        alert('Failed to add device to group. Please check your network connection or try again later.');
-    });
-
-
-
+        })
+        .catch(function (error) {
+            console.error('Error checking if device exists in group:', error);
+            return false;
+        });
 }
-
 
 function removeDeviceToGroup(groupId, groupName, deviceId) 
 {
@@ -1669,8 +1710,12 @@ function removeDeviceToGroup(groupId, groupName, deviceId)
     })
     .then(response => {
         if (response.ok) {
-            alert(`Device removed from group : ${groupName}`);
-        } else {
+            alert(`Device removed from group "${groupName}" successfully.`);
+          closeallDeviceDialogs();
+        }
+        else if (response.status === 403) {
+                alert('You do not have enough permission to remove device from this group.');
+            }else {
             alert('failed to remove device')
         }
     })
@@ -1687,30 +1732,69 @@ function removeDeviceToGroup(groupId, groupName, deviceId)
 function addUserToGroup(groupId,groupName,userEmail) {
 
     
-    const body = {
-        '@odata.id': `https://graph.microsoft.com/v1.0/users/${userEmail}`
-    };
+    // Check if the user already exists in the group
+    checkIfUserExistsInGroup(userEmail, groupId, authforApp)
+        .then(function (userExists) {
+            if (userExists) {
+                alert(`User is already an existing member of the group "${groupName}"`);
+                closeallUserDialogs();
+                return Promise.reject('User already exists in the group');
+            }
 
-    fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members/$ref`, {
-        method: 'POST',
+            // Continue with adding the user to the group
+            const body = {
+                '@odata.id': `https://graph.microsoft.com/v1.0/users/${userEmail}`
+            };
+
+            return fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members/$ref`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${authforApp}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+        })
+        .then(function (response) {
+            if (response.ok) {
+                alert(`User is added to group "${groupName}" successfully.`);
+                closeallUserDialogs();
+            } else if (response.status === 403) {
+                alert('You do not have enough permission to add users to this group.');
+            } else {
+                alert(`Failed to add user to group: ${groupName}`);
+            }
+        })
+        .catch(function (error) {
+            console.error('Error adding user to group:', error);
+        });
+}
+
+function checkIfUserExistsInGroup(userEmail, selectedGroupId, accessToken) {
+    return fetch(`https://graph.microsoft.com/v1.0/groups/${selectedGroupId}/members`, {
         headers: {
-            'Authorization': `Bearer ${authforApp}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-    })
-    .then(response => {
-        if (response.ok) {
-            alert(`User added to group: ${groupName}`);
-        } else {
-            alert(`Failed to add user to group: ${groupName}`);
+            'Authorization': `Bearer ${accessToken}`
         }
     })
-    .catch(error => {
-        console.error('Error adding user to group:', error);
-        alert('Failed to add user to group. Please check your network connection or try again later.');
-    });
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch group members. Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(function (membersData) {
+            return membersData.value.some(function (member) {
+                return member.userPrincipalName === userEmail;
+            });
+        })
+        .catch(function (error) {
+            console.error('Error checking if user exists in group:', error);
+            return false;
+        });
 }
+
+
+
 
 
 function removeUserToGroup(groupId,groupName,userEmail) 
@@ -1724,8 +1808,12 @@ function removeUserToGroup(groupId,groupName,userEmail)
     })
     .then(response => {
         if (response.ok) {
-            alert(`User removed from group: ${groupName}`);
-        } else {
+            alert(`User removed from group "${groupName}" successfully`);
+          closeallUserDialogs();
+        } 
+        else if (response.status === 403) {
+                alert('You do not have enough permission to remove user from this group.');
+            }else {
             alert(`Failed to remove user to group: ${groupName}`);
         }
     })
@@ -1778,7 +1866,16 @@ document.getElementById("closeWipeModal").addEventListener("click", () => {
     document.getElementById("deviceRemovalModal").style.display = "none";
   });
 
-
+function closeallUserDialogs(){
+   userGroupsDialog.style.display='none';
+   appsForDataTypeDialog.style.display='none';
+   dataTypeDialog.style.dispaly='none';
+}
+function closeallDeviceDialogs(){
+    deviceGroupsDialog.style.display='none';
+    appsForDataTypeDialog.style.display='none';
+    dataTypeDialog.style.display='none';
+}
 
 
   </script>
